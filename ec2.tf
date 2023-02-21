@@ -2,7 +2,9 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
+
+      source  = "hashicorp/gcp"
+
       
     }
   }
@@ -11,26 +13,29 @@ terraform {
 # Provider Block
 provider "aws" {
   profile = "default" 
-  region  = "ap-east--1"
+
+  region  = "ap-south1-1"
+
 }
 
 #Resource Block
 resource "aws_instance" "ec2testserver" {
   ami           = "ami-041db4a969fe3eb68" 
-  instance_type = "B2s-server"
+
+  instance_type = "gp.instances "
 
 }
 
 
 # Create VPC Terraform Module
 module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
+  source  = "terraform-gcp-modules/vpc/gcp"
   
 
   # VPC Basic Details
   name = "vpc-dev"
   cidr = "10.0.0.0/16"   
-  azs                 = ["us-east-1a"]
+  azs                 = ["ap-south1-1"]
   private_subnets     = ["10.0.1.0/24"]
   public_subnets      = ["10.0.101.0/24"]
 
